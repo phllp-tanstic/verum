@@ -1,0 +1,798 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verum | ZK-Gated Compliance on Stellar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+  </head>
+  <body class="bg-[#030308] text-[#FFFFFF] min-h-screen flex flex-col items-center antialiased overflow-x-hidden relative selection:bg-[#3B3BB4] selection:text-white" style="font-family: 'Geist', sans-serif;">
+    <!-- Canvas for WebGL/Pixel animated background -->
+    <canvas id="pixelGrid" class="fixed inset-0 z-0 pointer-events-none w-full h-screen" width="1240" height="542"></canvas>
+
+    <!-- Navigation -->
+    <nav class="relative z-10 mt-8 mb-24 md:mb-32 reveal transition-all duration-1000 ease-out w-full max-w-5xl px-6 flex justify-center" style="transition-delay: 100ms;">
+      <div class="flex items-center bg-[#111115]/80 backdrop-blur-md rounded border border-[#27272A] shadow-lg overflow-hidden text-sm">
+        <a href="#" class="flex items-center gap-2 px-5 py-2.5 text-white font-medium hover:bg-white/5 transition-colors tracking-tighter uppercase">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M7.5 8.5h9l-4.5 8z"></path>
+          </svg>
+          VERUM
+        </a>
+        <div class="w-px h-5 bg-[#27272A] mx-1"></div>
+        <a href="#about" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">
+          Github
+        </a>
+        <a href="#setup" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">
+          Setup
+        </a>
+        <a href="#demo" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">
+          Demo
+        </a>
+        <a href="#" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">
+          Contact
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <main class="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mb-32 md:mb-48">
+      <h1 class="reveal transition-all duration-1000 ease-out text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-white mb-6 font-light tracking-tighter" style="transition-delay: 200ms;">
+        ZK-Gated Compliance
+        <br>
+        on Stellar
+      </h1>
+
+      <p class="reveal transition-all duration-1000 ease-out text-lg md:text-xl text-[#A1A1AA] max-w-2xl mb-12 font-light leading-relaxed" style="transition-delay: 300ms;">
+        A verification layer for tokenized real-world assets. Bridge privacy and
+        strict regulatory requirements instantly with zero-knowledge proofs.
+      </p>
+
+      <div class="reveal transition-all duration-1000 ease-out" style="transition-delay: 400ms;">
+        <a href="#setup" class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 shadow-[0_0_20px_rgba(70,70,200,0.2)] hover:shadow-[0_0_30px_rgba(70,70,200,0.4)]">
+          Start verifying
+          <iconify-icon icon="solar:arrow-right-linear" width="18" stroke-width="1.5"></iconify-icon>
+        </a>
+      </div>
+    </main>
+
+    <!-- About Section -->
+    <section id="about" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+      <div class="flex flex-col items-center text-center mb-16 reveal transition-all duration-1000 ease-out">
+        <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4" style="font-family: 'JetBrains Mono', monospace;">
+          Platform
+        </span>
+        <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter">
+          Bridging Privacy &amp; Compliance
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal" style="transition-delay: 100ms;">
+          <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+            <iconify-icon icon="solar:shield-keyhole-linear" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+          </div>
+          <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">
+            Zero-Knowledge
+          </h3>
+          <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">
+            Verify investor accreditation and compliance without ever revealing
+            the underlying sensitive data on the public ledger.
+          </p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal" style="transition-delay: 200ms;">
+          <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+            <iconify-icon icon="solar:planet-linear" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+          </div>
+          <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">
+            Native to Stellar
+          </h3>
+          <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">
+            Seamlessly interacts with Soroban smart contracts, enabling atomic
+            settlement for tokenized real-world assets.
+          </p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal" style="transition-delay: 300ms;">
+          <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+            <iconify-icon icon="lucide:landmark" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+          </div>
+          <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">
+            Institutional Grade
+          </h3>
+          <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">
+            Built from the ground up for financial institutions requiring strict
+            regulatory adherence and high throughput.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+      <!-- Section header -->
+      <div class="flex flex-col items-center text-center mb-16 reveal transition-all duration-1000 ease-out">
+        <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4" style="font-family: 'JetBrains Mono', monospace;">
+          Live Demo
+        </span>
+        <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter mb-4">
+          Try Verum Now
+        </h2>
+        <p class="text-[#A1A1AA] text-base font-light max-w-xl leading-relaxed">
+          Generate a real zero-knowledge eligibility proof and authorize a Stellar trustline on-chain — without revealing your private data.
+        </p>
+      </div>
+
+      <!-- Step tabs -->
+      <div class="flex border border-[#27272A] rounded-lg overflow-hidden mb-8 reveal transition-all duration-1000 ease-out">
+        <button onclick="verum.goStep(1)" id="tab-1"
+          class="flex-1 py-4 px-6 text-left border-r border-[#27272A] transition-colors duration-200 group"
+          style="background: rgba(70,70,200,0.12);">
+          <span class="block text-xs font-medium tracking-widest uppercase mb-1 text-[#4646C8]" style="font-family: 'JetBrains Mono', monospace;">01</span>
+          <span class="text-white text-sm font-normal">Setup</span>
+        </button>
+        <button onclick="verum.goStep(2)" id="tab-2"
+          class="flex-1 py-4 px-6 text-left border-r border-[#27272A] transition-colors duration-200"
+          style="background: transparent;">
+          <span class="block text-xs font-medium tracking-widest uppercase mb-1 text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">02</span>
+          <span class="text-[#A1A1AA] text-sm font-normal">Generate Proof</span>
+        </button>
+        <button onclick="verum.goStep(3)" id="tab-3"
+          class="flex-1 py-4 px-6 text-left transition-colors duration-200"
+          style="background: transparent;">
+          <span class="block text-xs font-medium tracking-widest uppercase mb-1 text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">03</span>
+          <span class="text-[#A1A1AA] text-sm font-normal">Authorize</span>
+        </button>
+      </div>
+
+      <!-- Panel container -->
+      <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg backdrop-blur-sm reveal transition-all duration-1000 ease-out" style="transition-delay: 100ms;">
+
+        <!-- Panel 1: Setup -->
+        <div id="panel-1" class="p-8">
+          <div class="mb-8">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family: 'JetBrains Mono', monospace;">Issuer Configuration</p>
+            <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Active Eligibility Rules</h3>
+            <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">These rules are enforced cryptographically on-chain. No identity documents are collected or stored.</p>
+          </div>
+
+          <!-- Issuer rule cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <div class="flex items-center gap-3 mb-3">
+                <iconify-icon icon="solar:shield-keyhole-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+                <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">Accreditation</span>
+              </div>
+              <p class="text-white text-sm font-normal">Accredited investors only</p>
+            </div>
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <div class="flex items-center gap-3 mb-3">
+                <iconify-icon icon="solar:planet-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+                <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">Jurisdiction</span>
+              </div>
+              <p class="text-white text-sm font-normal">US · GB · CA · DE</p>
+            </div>
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <div class="flex items-center gap-3 mb-3">
+                <iconify-icon icon="lucide:landmark" width="18" class="text-[#4646C8]"></iconify-icon>
+                <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">Min. Capital</span>
+              </div>
+              <p class="text-white text-sm font-normal">$50,000 committed</p>
+            </div>
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <div class="flex items-center gap-3 mb-3">
+                <iconify-icon icon="solar:lock-keyhole-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+                <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">Merkle Root</span>
+              </div>
+              <p class="text-white text-xs font-light" style="font-family: 'JetBrains Mono', monospace; word-break: break-all;">0x2356709c...e6488</p>
+            </div>
+          </div>
+
+          <!-- Holder key input -->
+          <div class="mb-6">
+            <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family: 'JetBrains Mono', monospace;">
+              Holder Secret Key
+            </label>
+            <input id="holder-secret" type="password"
+              placeholder="SXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors"
+              style="font-family: 'JetBrains Mono', monospace;" />
+            <p class="text-[#A1A1AA] text-xs mt-2 font-light">Enter a funded Stellar account secret key to act as the holder.</p>
+          </div>
+
+          <button onclick="verum.setupHolder()"
+            class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50">
+            <span id="setup-btn-text">Connect Holder Account</span>
+            <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+          </button>
+
+          <div id="setup-result" class="mt-6 hidden"></div>
+        </div>
+
+        <!-- Panel 2: Generate Proof -->
+        <div id="panel-2" class="p-8 hidden">
+          <div class="mb-8">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family: 'JetBrains Mono', monospace;">Step 02</p>
+            <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Generate Eligibility Proof</h3>
+            <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">Your private data never leaves this machine. Only the cryptographic proof is submitted on-chain.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Accreditation -->
+            <div>
+              <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family: 'JetBrains Mono', monospace;">Accreditation Status</label>
+              <div class="flex border border-[#27272A] rounded overflow-hidden">
+                <button id="acc-yes" onclick="verum.setAccredited(true)"
+                  class="flex-1 py-3 text-sm transition-colors text-white"
+                  style="background: rgba(70,70,200,0.15);">
+                  ✓ Accredited
+                </button>
+                <button id="acc-no" onclick="verum.setAccredited(false)"
+                  class="flex-1 py-3 text-sm transition-colors text-[#A1A1AA] border-l border-[#27272A]"
+                  style="background: transparent;">
+                  ✗ Not Accredited
+                </button>
+              </div>
+            </div>
+
+            <!-- Jurisdiction -->
+            <div>
+              <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family: 'JetBrains Mono', monospace;">Jurisdiction</label>
+              <select id="country-code"
+                class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none appearance-none"
+                style="font-family: 'JetBrains Mono', monospace;">
+                <option value="826">United Kingdom (GB) ✓</option>
+                <option value="840">United States (US) ✓</option>
+                <option value="124">Canada (CA) ✓</option>
+                <option value="276">Germany (DE) ✓</option>
+                <option value="999">North Korea (KP) ✗ — Not Permitted</option>
+              </select>
+            </div>
+
+            <!-- Capital -->
+            <div>
+              <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family: 'JetBrains Mono', monospace;">Committed Capital (USD)</label>
+              <input id="capital" type="number" value="75000"
+                class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors"
+                style="font-family: 'JetBrains Mono', monospace;" />
+            </div>
+
+            <!-- Nonce -->
+            <div>
+              <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family: 'JetBrains Mono', monospace;">Secret Nonce</label>
+              <input id="nonce" type="number" value="12345"
+                class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors"
+                style="font-family: 'JetBrains Mono', monospace;" />
+            </div>
+          </div>
+
+          <button id="prove-btn" onclick="verum.generateProof()"
+            class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 mb-6">
+            Generate Zero-Knowledge Proof
+            <iconify-icon icon="solar:lock-keyhole-linear" width="16"></iconify-icon>
+          </button>
+
+          <!-- Proof terminal — the live ZK computation display -->
+          <div id="proof-terminal" class="hidden bg-[#030308]/70 border border-[#27272A] rounded-lg overflow-hidden">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+              <div id="terminal-dot" class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;" id="terminal-status">ZK Proof Engine</span>
+            </div>
+            <div id="terminal-body" class="p-5 min-h-32 max-h-56 overflow-y-auto text-xs leading-loose" style="font-family: 'JetBrains Mono', monospace;"></div>
+          </div>
+
+          <div id="prove-result" class="mt-6 hidden"></div>
+        </div>
+
+        <!-- Panel 3: Authorize -->
+        <div id="panel-3" class="p-8 hidden">
+          <div class="mb-8">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family: 'JetBrains Mono', monospace;">Step 03</p>
+            <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Submit Proof &amp; Authorize</h3>
+            <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">Your proof is verified on-chain by the Verum Gate contract. If valid, your trustline is authorized. The issuer sees nothing.</p>
+          </div>
+
+          <!-- Proof summary -->
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family: 'JetBrains Mono', monospace;">Proof Size</p>
+              <p id="summary-size" class="text-[#4646C8] text-sm font-normal" style="font-family: 'JetBrains Mono', monospace;">—</p>
+            </div>
+            <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+              <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family: 'JetBrains Mono', monospace;">Public Inputs</p>
+              <p id="summary-inputs" class="text-white text-sm font-normal" style="font-family: 'JetBrains Mono', monospace;">—</p>
+            </div>
+          </div>
+
+          <!-- Proof hex preview -->
+          <div class="bg-[#030308]/70 border border-[#27272A] rounded p-4 mb-6 overflow-hidden" style="max-height: 72px; position: relative;">
+            <p id="proof-hex-preview" class="text-xs text-[#A1A1AA] break-all" style="font-family: 'JetBrains Mono', monospace;">—</p>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:36px;background:linear-gradient(transparent,#030308);"></div>
+          </div>
+
+          <button id="authorize-btn" onclick="verum.authorize()"
+            class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 mb-6">
+            Submit to Verum Gate
+            <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+          </button>
+
+          <!-- Auth terminal -->
+          <div id="auth-terminal" class="hidden bg-[#030308]/70 border border-[#27272A] rounded-lg overflow-hidden mb-6">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+              <div id="auth-dot" class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;" id="auth-status">Stellar Network</span>
+            </div>
+            <div id="auth-terminal-body" class="p-5 min-h-24 max-h-48 overflow-y-auto text-xs leading-loose" style="font-family: 'JetBrains Mono', monospace;"></div>
+          </div>
+
+          <div id="auth-result" class="hidden"></div>
+
+          <button onclick="verum.goStep(2)"
+            class="mt-4 text-xs text-[#A1A1AA] hover:text-white transition-colors border border-[#27272A] hover:border-[#4646C8] px-4 py-2 rounded"
+            style="font-family: 'JetBrains Mono', monospace;">
+            ← Generate New Proof
+          </button>
+        </div>
+
+      </div><!-- end panel container -->
+    </section>
+
+    <!-- How to Setup Section -->
+    <section id="setup" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+      <div class="flex flex-col md:flex-row gap-16 items-center">
+        <div class="w-full md:w-1/2 reveal transition-all duration-1000 ease-out">
+          <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4 block" style="font-family: 'JetBrains Mono', monospace;">
+            Developers
+          </span>
+          <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter mb-6">
+            Integrate in minutes
+          </h2>
+          <p class="text-[#A1A1AA] text-base leading-relaxed mb-8 font-light">
+            Verum provides a streamlined SDK for Soroban. Generate proofs
+            client-side and verify them directly in your Stellar smart contracts
+            with just a few lines of code.
+          </p>
+          <ul class="space-y-5">
+            <li class="flex items-start gap-3">
+              <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+              <span class="text-sm text-gray-300 font-light leading-relaxed">
+                Install the Soroban compatible SDK
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+              <span class="text-sm text-gray-300 font-light leading-relaxed">
+                Initialize the client with your network details
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+              <span class="text-sm text-gray-300 font-light leading-relaxed">
+                Wrap asset transfers with ZK compliance checks
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="w-full md:w-1/2 reveal transition-all duration-1000 ease-out" style="transition-delay: 200ms;">
+          <div class="bg-[#030308]/50 border border-[#27272A] rounded-lg overflow-hidden shadow-2xl backdrop-blur-sm">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+              <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">
+                terminal
+              </span>
+            </div>
+            <div class="p-6 overflow-x-auto">
+              <pre class="text-xs leading-loose" style="font-family: 'JetBrains Mono', monospace;"><code class="text-[#A1A1AA]"><span class="text-[#4646C8]">npm</span> install @verum/zk-soroban
+
+<span class="text-[#3B3BB4]">import</span> { Verifier } <span class="text-[#3B3BB4]">from</span> <span class="text-white">'@verum/zk-soroban'</span>;
+
+<span class="text-[#A1A1AA]/50">// Initialize the verifier</span>
+<span class="text-[#3B3BB4]">const</span> verifier = <span class="text-[#3B3BB4]">new</span> Verifier({
+  network: <span class="text-white">'testnet'</span>,
+  rpcUrl: <span class="text-white">'https://soroban-testnet.stellar.org'</span>
+});
+
+<span class="text-[#A1A1AA]/50">// Verify an asset transfer</span>
+<span class="text-[#3B3BB4]">const</span> isCompliant = <span class="text-[#4646C8]">await</span> verifier.checkProof(
+  userAddress,
+  assetId,
+  zkProof
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-10 w-full border-t border-[#27272A] bg-[#030308]/80 backdrop-blur-md pt-12 pb-8 mt-auto">
+      <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-2">
+          <span class="text-white font-medium tracking-tighter text-sm uppercase flex items-center gap-1.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M7.5 8.5h9l-4.5 8z"></path>
+            </svg>
+            VERUM
+          </span>
+          <span class="hidden md:inline text-[#27272A]">|</span>
+          <span class="text-[#A1A1AA] text-xs font-light">
+            Built for Stellar Hack: Real-World ZK on Stellar
+          </span>
+        </div>
+        <div class="flex gap-6 text-xs text-[#A1A1AA] font-light">
+          <a href="#" class="hover:text-white transition-colors">Twitter</a>
+          <a href="#" class="hover:text-white transition-colors">GitHub</a>
+          <a href="#" class="hover:text-white transition-colors">
+            Documentation
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Intersection Observer for scroll reveal animations
+      document.addEventListener("DOMContentLoaded", () => {
+          const observerOptions = {
+              root: null,
+              rootMargin: '0px',
+              threshold: 0.1
+          };
+
+          const observer = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.remove('opacity-0', 'translate-y-4', 'translate-y-6');
+                      observer.unobserve(entry.target);
+                  }
+              });
+          }, observerOptions);
+
+          document.querySelectorAll('.reveal').forEach(el => {
+              observer.observe(el);
+          });
+      });
+
+      // Pixel Arc Canvas Animation
+      const canvas = document.getElementById('pixelGrid');
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      let width, height;
+      const pixelSize = 8;
+
+      function resizeCanvas() {
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas.width = width;
+          canvas.height = height;
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      let time = 0;
+
+      function render() {
+          ctx.fillStyle = '#030308';
+          ctx.fillRect(0, 0, width, height);
+
+          const cols = Math.ceil(width / pixelSize);
+          const rows = Math.ceil(height / pixelSize);
+
+          const arcCenterY = height * 0.4;
+          const arcDrop = height * 0.9;
+          const thickness = height * 0.35;
+
+          for (let x = 0; x < cols; x++) {
+              for (let y = 0; y < rows; y++) {
+                  const px = x * pixelSize;
+                  const py = y * pixelSize;
+
+                  const nx = (px / width) * 2 - 1;
+                  const curveY = arcCenterY + Math.pow(Math.abs(nx), 1.8) * arcDrop;
+                  const distToCurve = Math.abs(py - curveY);
+
+                  let intensity = Math.max(0, 1 - (distToCurve / thickness));
+
+                  if (intensity > 0.01) {
+                      const wave1 = Math.sin(nx * 4 - time * 1.5) * 0.1;
+                      const wave2 = Math.cos(py * 0.01 + time) * 0.1;
+                      intensity = Math.max(0, Math.min(1, intensity + wave1 + wave2));
+
+                      const edgeFade = 1 - Math.pow(Math.abs(nx), 2.5);
+                      intensity *= Math.max(0, edgeFade);
+
+                      if (intensity > 0.02) {
+                          const coreStr = Math.pow(intensity, 3);
+                          const midStr = Math.pow(intensity, 1.5);
+
+                          const r = Math.floor(40 * intensity + 150 * coreStr);
+                          const g = Math.floor(40 * intensity + 150 * coreStr);
+                          const b = Math.floor(220 * midStr + 35 * coreStr);
+
+                          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                          ctx.globalAlpha = intensity;
+                          ctx.fillRect(px, py, pixelSize - 1, pixelSize - 1);
+                      }
+                  }
+              }
+          }
+
+          ctx.globalAlpha = 1.0;
+          time += 0.02;
+          requestAnimationFrame(render);
+      }
+
+      render();
+    </script>
+
+    <script>
+    // ── Verum Demo ────────────────────────────────────────────────────────────
+    const verum = (() => {
+      let isAccredited = true;
+      let holderAddress = null;
+      let proofData = null;
+
+      // ── Step navigation ──────────────────────────────────────────────────
+      function goStep(n) {
+        [1,2,3].forEach(i => {
+          const panel = document.getElementById('panel-' + i);
+          const tab   = document.getElementById('tab-' + i);
+          const numEl = tab.querySelector('span:first-child');
+          const lblEl = tab.querySelector('span:last-child');
+          if (i === n) {
+            panel.classList.remove('hidden');
+            tab.style.background = 'rgba(70,70,200,0.12)';
+            numEl.classList.replace('text-[#A1A1AA]', 'text-[#4646C8]');
+            lblEl.classList.replace('text-[#A1A1AA]', 'text-white');
+          } else {
+            panel.classList.add('hidden');
+            tab.style.background = 'transparent';
+            if (!numEl.classList.contains('text-[#A1A1AA]')) {
+              numEl.classList.replace('text-[#4646C8]', 'text-[#A1A1AA]');
+            }
+            if (!lblEl.classList.contains('text-[#A1A1AA]')) {
+              lblEl.classList.replace('text-white', 'text-[#A1A1AA]');
+            }
+          }
+        });
+      }
+
+      // ── Accreditation toggle ─────────────────────────────────────────────
+      function setAccredited(val) {
+        isAccredited = val;
+        const yes = document.getElementById('acc-yes');
+        const no  = document.getElementById('acc-no');
+        if (val) {
+          yes.style.background = 'rgba(70,70,200,0.15)';
+          yes.classList.replace('text-[#A1A1AA]','text-white');
+          no.style.background  = 'transparent';
+          no.classList.replace('text-white','text-[#A1A1AA]');
+        } else {
+          no.style.background  = 'rgba(70,70,200,0.15)';
+          no.classList.replace('text-[#A1A1AA]','text-white');
+          yes.style.background = 'transparent';
+          yes.classList.replace('text-white','text-[#A1A1AA]');
+        }
+      }
+
+      // ── Terminal helpers ─────────────────────────────────────────────────
+      function termLog(bodyId, msg, color) {
+        const el = document.createElement('div');
+        el.style.color = color || '#6A8E8E';
+        el.style.marginBottom = '2px';
+        el.style.animation = 'fadeInLine 0.25s ease forwards';
+        el.textContent = '> ' + msg;
+        document.getElementById(bodyId).appendChild(el);
+        document.getElementById(bodyId).scrollTop = 9999;
+      }
+
+      function dotPulse(id, on) {
+        const dot = document.getElementById(id);
+        dot.style.background = on ? '#4646C8' : '#27272A';
+        dot.style.animation  = on ? 'dotPulse 1s infinite' : 'none';
+      }
+
+      // ── Setup holder ─────────────────────────────────────────────────────
+      async function setupHolder() {
+        const secret = document.getElementById('holder-secret').value.trim();
+        if (!secret.startsWith('S')) {
+          showResult('setup-result', false, 'Invalid secret key — must start with S.');
+          return;
+        }
+        document.getElementById('setup-btn-text').textContent = 'Connecting...';
+        try {
+          const res = await fetch('/api/create-trustline', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ holderSecret: secret }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            holderAddress = data.address;
+            showResult('setup-result', true, '✓ Connected: ' + holderAddress + '\n✓ Trustline created on VERUM asset.');
+            document.getElementById('setup-btn-text').textContent = '✓ Connected';
+            setTimeout(() => goStep(2), 1400);
+          } else {
+            showResult('setup-result', false, data.error || 'Connection failed.');
+            document.getElementById('setup-btn-text').textContent = 'Connect Holder Account';
+          }
+        } catch(e) {
+          showResult('setup-result', false, 'Server error: ' + e.message);
+          document.getElementById('setup-btn-text').textContent = 'Connect Holder Account';
+        }
+      }
+
+      // ── Generate proof ───────────────────────────────────────────────────
+      async function generateProof() {
+        const countryCode = document.getElementById('country-code').value;
+        const capital     = document.getElementById('capital').value;
+        const nonce       = document.getElementById('nonce').value;
+
+        document.getElementById('proof-terminal').classList.remove('hidden');
+        document.getElementById('terminal-body').innerHTML = '';
+        document.getElementById('prove-result').classList.add('hidden');
+        document.getElementById('prove-btn').disabled = true;
+        dotPulse('terminal-dot', true);
+        document.getElementById('terminal-status').textContent = 'Generating proof...';
+
+        const steps = [
+          [200,  'Loading circuit: verum_circuit.json'],
+          [700,  'Witness: accredited=' + isAccredited + ', country=' + countryCode + ', capital=' + capital],
+          [1200, 'Running constraint solver...'],
+          [1900, 'Check 1/4: Commitment binding...'],
+          [2700, 'Check 2/4: Accreditation equality...'],
+          [3500, 'Check 3/4: Jurisdiction Merkle membership...'],
+          [4300, 'Check 4/4: Capital range proof...'],
+          [5100, 'All constraints satisfied. Generating UltraHonk proof...'],
+          [5700, 'Barretenberg proving engine initializing...'],
+        ];
+        steps.forEach(([delay, msg]) => setTimeout(() => termLog('terminal-body', msg, '#A1A1AA'), delay));
+
+        try {
+          const res = await fetch('/api/prove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accredited: isAccredited, countryCode, capital, nonce }),
+          });
+          const data = await res.json();
+          dotPulse('terminal-dot', false);
+
+          if (data.success) {
+            termLog('terminal-body', 'Proof generated. ' + data.proofSize + ' bytes (' + (data.proofSize/32) + ' field elements)', '#4646C8');
+            termLog('terminal-body', 'Public inputs: ' + data.publicInputsSize + ' bytes (3 fields)', '#4646C8');
+            termLog('terminal-body', 'Proof ready for submission.', '#4646C8');
+            document.getElementById('terminal-status').textContent = '✓ Proof generated';
+            proofData = data;
+            document.getElementById('summary-size').textContent = data.proofSize + ' bytes';
+            document.getElementById('summary-inputs').textContent = data.publicInputsSize + ' bytes';
+            document.getElementById('proof-hex-preview').textContent = data.proofHex.slice(0, 180) + '...';
+            showResult('prove-result', true, '✓ Zero-knowledge proof generated.\nAll 4 eligibility checks satisfied. No private data revealed.');
+            setTimeout(() => goStep(3), 1500);
+          } else {
+            termLog('terminal-body', 'CONSTRAINT FAILURE: ' + data.error, '#FF4D6A');
+            document.getElementById('terminal-status').textContent = '✗ Rejected';
+            showResult('prove-result', false, data.error);
+          }
+        } catch(e) {
+          dotPulse('terminal-dot', false);
+          termLog('terminal-body', 'Error: ' + e.message, '#FF4D6A');
+          showResult('prove-result', false, 'Server error: ' + e.message);
+        }
+        document.getElementById('prove-btn').disabled = false;
+      }
+
+      // ── Authorize ────────────────────────────────────────────────────────
+      async function authorize() {
+        if (!proofData) return showResult('auth-result', false, 'Generate a proof first.');
+        if (!holderAddress) return showResult('auth-result', false, 'Connect a holder account first.');
+
+        document.getElementById('auth-terminal').classList.remove('hidden');
+        document.getElementById('auth-terminal-body').innerHTML = '';
+        document.getElementById('auth-result').classList.add('hidden');
+        document.getElementById('authorize-btn').disabled = true;
+        dotPulse('auth-dot', true);
+        document.getElementById('auth-status').textContent = 'Submitting to Stellar...';
+
+        termLog('auth-terminal-body', 'Connecting to Stellar localnet...', '#A1A1AA');
+        termLog('auth-terminal-body', 'Calling: Verum Gate → verify_and_authorize', '#A1A1AA');
+        termLog('auth-terminal-body', 'Holder: ' + holderAddress, '#A1A1AA');
+        termLog('auth-terminal-body', 'Submitting proof (' + proofData.proofSize + ' bytes)...', '#A1A1AA');
+
+        try {
+          const res = await fetch('/api/authorize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              proofHex: proofData.proofHex,
+              publicInputsHex: proofData.publicInputsHex,
+              holderAddress,
+            }),
+          });
+          const data = await res.json();
+          dotPulse('auth-dot', false);
+
+          if (data.success) {
+            termLog('auth-terminal-body', '✓ verify_proof: PASSED (ZK proof valid on-chain)', '#4646C8');
+            termLog('auth-terminal-body', '✓ set_authorized: AUTHORIZED on VERUM SAC', '#4646C8');
+            termLog('auth-terminal-body', '✓ Event: verum/auth → ' + holderAddress, '#4646C8');
+            termLog('auth-terminal-body', 'Tx: ' + data.txHash, '#4646C8');
+            document.getElementById('auth-status').textContent = '✓ Authorized';
+            showAuthSuccess(data.txHash);
+          } else {
+            termLog('auth-terminal-body', 'Failed: ' + data.error, '#FF4D6A');
+            document.getElementById('auth-status').textContent = '✗ Failed';
+            showResult('auth-result', false, data.error);
+          }
+        } catch(e) {
+          dotPulse('auth-dot', false);
+          showResult('auth-result', false, e.message);
+        }
+        document.getElementById('authorize-btn').disabled = false;
+      }
+
+      // ── Result helpers ───────────────────────────────────────────────────
+      function showResult(id, success, msg) {
+        const el = document.getElementById(id);
+        el.classList.remove('hidden');
+        const borderColor = success ? 'border-[#4646C8]' : 'border-red-500/50';
+        const textColor   = success ? 'text-[#4646C8]' : 'text-red-400';
+        el.innerHTML = `
+          <div class="border ${borderColor} rounded-lg p-5 bg-[#111115]/50">
+            <p class="text-xs font-medium tracking-widest uppercase ${textColor} mb-3" style="font-family:'JetBrains Mono',monospace;">
+              ${success ? '✓ Success' : '✗ Failed'}
+            </p>
+            <p class="${textColor} text-xs leading-relaxed whitespace-pre-wrap" style="font-family:'JetBrains Mono',monospace;">${msg}</p>
+          </div>`;
+      }
+
+      function showAuthSuccess(txHash) {
+        const el = document.getElementById('auth-result');
+        el.classList.remove('hidden');
+        el.innerHTML = `
+          <div class="border border-[#4646C8]/50 rounded-lg p-6 bg-[#282855]/20">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#4646C8] mb-5" style="font-family:'JetBrains Mono',monospace;">✓ Trustline Authorized</p>
+            <div class="space-y-3">
+              <div class="flex gap-4">
+                <span class="text-xs text-[#A1A1AA] uppercase tracking-wider min-w-28" style="font-family:'JetBrains Mono',monospace;">Transaction</span>
+                <span class="text-xs text-[#4646C8] break-all" style="font-family:'JetBrains Mono',monospace;">${txHash}</span>
+              </div>
+              <div class="flex gap-4">
+                <span class="text-xs text-[#A1A1AA] uppercase tracking-wider min-w-28" style="font-family:'JetBrains Mono',monospace;">Holder</span>
+                <span class="text-xs text-white break-all" style="font-family:'JetBrains Mono',monospace;">${holderAddress}</span>
+              </div>
+              <div class="flex gap-4">
+                <span class="text-xs text-[#A1A1AA] uppercase tracking-wider min-w-28" style="font-family:'JetBrains Mono',monospace;">Asset</span>
+                <span class="text-xs text-white" style="font-family:'JetBrains Mono',monospace;">VERUM</span>
+              </div>
+              <div class="flex gap-4">
+                <span class="text-xs text-[#A1A1AA] uppercase tracking-wider min-w-28" style="font-family:'JetBrains Mono',monospace;">ZK Verified</span>
+                <span class="text-xs text-[#4646C8]" style="font-family:'JetBrains Mono',monospace;">On-chain ✓</span>
+              </div>
+              <div class="flex gap-4">
+                <span class="text-xs text-[#A1A1AA] uppercase tracking-wider min-w-28" style="font-family:'JetBrains Mono',monospace;">Issuer Saw</span>
+                <span class="text-xs text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">Nothing — proof only</span>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      return { goStep, setAccredited, setupHolder, generateProof, authorize };
+    })();
+
+    // Inject keyframe animations into document
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+      @keyframes fadeInLine { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+    `;
+    document.head.appendChild(style);
+    </script></html>

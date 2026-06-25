@@ -1,0 +1,6 @@
+[package]
+name = "verum_circuit"
+type = "bin"
+authors = [""]
+
+[dependencies]
