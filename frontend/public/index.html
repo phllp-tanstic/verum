@@ -38,13 +38,13 @@
 
     <!-- Hero Content -->
     <main class="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mb-32 md:mb-48">
-      <h1 class="reveal transition-all duration-1000 ease-out text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-white mb-6 font-light tracking-tighter" style="transition-delay: 200ms;">
+      <h1 class="reveal transition-all duration-1000 ease-out text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-white mb-6 font-light tracking-tighter" style="transition-delay: 200ms; text-shadow: 0 0 40px rgba(3,3,8,0.9), 0 2px 20px rgba(3,3,8,0.8), 0 0 80px rgba(3,3,8,0.6);">
         ZK-Gated Compliance
         <br>
         on Stellar
       </h1>
 
-      <p class="reveal transition-all duration-1000 ease-out text-lg md:text-xl text-[#A1A1AA] max-w-2xl mb-12 font-light leading-relaxed" style="transition-delay: 300ms;">
+      <p class="reveal transition-all duration-1000 ease-out text-lg md:text-xl text-white max-w-2xl mb-12 font-light leading-relaxed" style="transition-delay: 300ms; text-shadow: 0 0 30px rgba(3,3,8,0.95), 0 2px 12px rgba(3,3,8,0.9); opacity: 0.85;">
         A verification layer for tokenized real-world assets. Bridge privacy and
         strict regulatory requirements instantly with zero-knowledge proofs.
       </p>
@@ -351,30 +351,30 @@
             Developers
           </span>
           <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter mb-6">
-            Integrate in minutes
+            How it works
           </h2>
           <p class="text-[#A1A1AA] text-base leading-relaxed mb-8 font-light">
-            Verum provides a streamlined SDK for Soroban. Generate proofs
-            client-side and verify them directly in your Stellar smart contracts
-            with just a few lines of code.
+            A holder commits their eligibility facts once as a single hash. To request
+            authorization, they generate a Noir circuit proof. A Soroban contract
+            verifies the proof on-chain and authorizes the trustline automatically.
           </p>
           <ul class="space-y-5">
             <li class="flex items-start gap-3">
               <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
               <span class="text-sm text-gray-300 font-light leading-relaxed">
-                Install the Soroban compatible SDK
+                Holder commits eligibility facts as a Pedersen hash — no documents sent
               </span>
             </li>
             <li class="flex items-start gap-3">
               <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
               <span class="text-sm text-gray-300 font-light leading-relaxed">
-                Initialize the client with your network details
+                Noir circuit proves accreditation, jurisdiction, and capital in one proof
               </span>
             </li>
             <li class="flex items-start gap-3">
               <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
               <span class="text-sm text-gray-300 font-light leading-relaxed">
-                Wrap asset transfers with ZK compliance checks
+                Verum Gate verifies on-chain via BN254 and calls SetTrustLineFlags
               </span>
             </li>
           </ul>
@@ -386,26 +386,29 @@
               <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
               <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
               <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family: 'JetBrains Mono', monospace;">
-                terminal
+                verum_circuit/src/main.nr
               </span>
             </div>
             <div class="p-6 overflow-x-auto">
-              <pre class="text-xs leading-loose" style="font-family: 'JetBrains Mono', monospace;"><code class="text-[#A1A1AA]"><span class="text-[#4646C8]">npm</span> install @verum/zk-soroban
-
-<span class="text-[#3B3BB4]">import</span> { Verifier } <span class="text-[#3B3BB4]">from</span> <span class="text-white">'@verum/zk-soroban'</span>;
-
-<span class="text-[#A1A1AA]/50">// Initialize the verifier</span>
-<span class="text-[#3B3BB4]">const</span> verifier = <span class="text-[#3B3BB4]">new</span> Verifier({
-  network: <span class="text-white">'testnet'</span>,
-  rpcUrl: <span class="text-white">'https://soroban-testnet.stellar.org'</span>
-});
-
-<span class="text-[#A1A1AA]/50">// Verify an asset transfer</span>
-<span class="text-[#3B3BB4]">const</span> isCompliant = <span class="text-[#4646C8]">await</span> verifier.checkProof(
-  userAddress,
-  assetId,
-  zkProof
-);</code></pre>
+              <pre class="text-xs leading-loose" style="font-family: 'JetBrains Mono', monospace;"><code class="text-[#A1A1AA]"><span class="text-[#A1A1AA]/50">// Single proof, four eligibility checks</span>
+<span class="text-[#3B3BB4]">fn</span> <span class="text-white">main</span>(
+  accredited_flag: Field,   <span class="text-[#A1A1AA]/50">// private</span>
+  country_code: Field,      <span class="text-[#A1A1AA]/50">// private</span>
+  committed_capital: <span class="text-[#4646C8]">u64</span>,  <span class="text-[#A1A1AA]/50">// private</span>
+  secret_nonce: Field,      <span class="text-[#A1A1AA]/50">// private</span>
+  commitment: <span class="text-[#3B3BB4]">pub</span> Field,    <span class="text-[#A1A1AA]/50">// public</span>
+  merkle_root: <span class="text-[#3B3BB4]">pub</span> Field,   <span class="text-[#A1A1AA]/50">// public</span>
+  min_capital_threshold: <span class="text-[#3B3BB4]">pub</span> <span class="text-[#4646C8]">u64</span>
+) {
+  <span class="text-[#A1A1AA]/50">// 1. Commitment binding</span>
+  <span class="text-[#3B3BB4]">assert</span>(pedersen_hash([...]) == commitment);
+  <span class="text-[#A1A1AA]/50">// 2. Accreditation equality</span>
+  <span class="text-[#3B3BB4]">assert</span>(accredited_flag == <span class="text-[#4646C8]">1</span>);
+  <span class="text-[#A1A1AA]/50">// 3. Jurisdiction Merkle membership</span>
+  <span class="text-[#3B3BB4]">assert</span>(computed_root == merkle_root);
+  <span class="text-[#A1A1AA]/50">// 4. Capital range proof</span>
+  <span class="text-[#3B3BB4]">assert</span>(committed_capital >= min_capital_threshold);
+}</code></pre>
             </div>
           </div>
         </div>
@@ -487,9 +490,9 @@
           const cols = Math.ceil(width / pixelSize);
           const rows = Math.ceil(height / pixelSize);
 
-          const arcCenterY = height * 0.4;
+          const arcCenterY = height * 0.55;
           const arcDrop = height * 0.9;
-          const thickness = height * 0.35;
+          const thickness = height * 0.28;
 
           for (let x = 0; x < cols; x++) {
               for (let y = 0; y < rows; y++) {
@@ -519,7 +522,8 @@
                           const b = Math.floor(220 * midStr + 35 * coreStr);
 
                           ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-                          ctx.globalAlpha = intensity;
+                          // Cap at 0.45 so canvas never overpowers text above it
+                          ctx.globalAlpha = Math.min(intensity, 0.45);
                           ctx.fillRect(px, py, pixelSize - 1, pixelSize - 1);
                       }
                   }
