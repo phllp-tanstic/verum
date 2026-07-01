@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verum | ZK-Gated Compliance on Stellar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    @keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    @keyframes fadeInLine { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+  </style>
+</head>
+<body class="bg-[#030308] text-[#FFFFFF] min-h-screen flex flex-col items-center antialiased overflow-x-hidden relative selection:bg-[#3B3BB4] selection:text-white" style="font-family: 'Geist', sans-serif;">
+
+  <!-- Canvas pixel background — rendered by inline script below, not module -->
+  <canvas id="pixelGrid" class="fixed inset-0 z-0 pointer-events-none w-full h-screen"></canvas>
+
+  <!-- Navigation -->
+  <nav class="relative z-10 mt-8 mb-24 md:mb-32 reveal w-full max-w-5xl px-6 flex justify-center">
+    <div class="flex items-center bg-[#111115]/80 backdrop-blur-md rounded border border-[#27272A] shadow-lg overflow-hidden text-sm">
+      <a href="#" class="flex items-center gap-2 px-5 py-2.5 text-white font-medium hover:bg-white/5 transition-colors tracking-tighter uppercase">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <path d="M7.5 8.5h9l-4.5 8z"></path>
+        </svg>
+        VERUM
+      </a>
+      <div class="w-px h-5 bg-[#27272A] mx-1"></div>
+      <a href="https://github.com/phllp-tanstic/verum" target="_blank" rel="noopener" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">GitHub</a>
+      <a href="#setup" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">Docs</a>
+      <a href="#demo" class="px-5 py-2.5 text-[#A1A1AA] hover:text-white transition-colors font-light">Demo</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <main class="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mb-32 md:mb-48">
+    <h1 class="reveal text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-white mb-6 font-light tracking-tighter"
+        style="text-shadow: 0 0 40px rgba(3,3,8,0.9), 0 2px 20px rgba(3,3,8,0.8), 0 0 80px rgba(3,3,8,0.6);">
+      ZK-Gated Compliance<br>on Stellar
+    </h1>
+    <p class="reveal text-lg md:text-xl text-white max-w-2xl mb-12 font-light leading-relaxed"
+       style="text-shadow: 0 0 30px rgba(3,3,8,0.95), 0 2px 12px rgba(3,3,8,0.9); opacity: 0.85;">
+      A verification layer for tokenized real-world assets. Bridge privacy and
+      strict regulatory requirements instantly with zero-knowledge proofs.
+    </p>
+    <div class="reveal">
+      <a href="#demo" class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 shadow-[0_0_20px_rgba(70,70,200,0.2)] hover:shadow-[0_0_30px_rgba(70,70,200,0.4)]">
+        Start verifying
+        <iconify-icon icon="solar:arrow-right-linear" width="18" stroke-width="1.5"></iconify-icon>
+      </a>
+    </div>
+  </main>
+
+  <!-- Platform / About -->
+  <section id="about" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+    <div class="flex flex-col items-center text-center mb-16 reveal">
+      <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4" style="font-family:'JetBrains Mono',monospace;">Platform</span>
+      <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter">Bridging Privacy &amp; Compliance</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal">
+        <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+          <iconify-icon icon="solar:shield-keyhole-linear" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+        </div>
+        <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">Zero-Knowledge</h3>
+        <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">Verify investor accreditation and compliance without ever revealing the underlying sensitive data on the public ledger.</p>
+      </div>
+      <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal">
+        <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+          <iconify-icon icon="solar:planet-linear" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+        </div>
+        <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">Native to Stellar</h3>
+        <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">Seamlessly interacts with Soroban smart contracts, enabling atomic settlement for tokenized real-world assets.</p>
+      </div>
+      <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg p-8 backdrop-blur-sm hover:border-[#4646C8]/50 transition-colors duration-500 group reveal">
+        <div class="w-12 h-12 rounded-full bg-[#111115] flex items-center justify-center mb-6 border border-[#27272A] group-hover:border-[#4646C8]/50 transition-colors">
+          <iconify-icon icon="lucide:landmark" width="24" stroke-width="1.5" class="text-[#4646C8]"></iconify-icon>
+        </div>
+        <h3 class="text-xl text-white font-normal mb-3 tracking-tighter">Institutional Grade</h3>
+        <p class="text-[#A1A1AA] text-sm leading-relaxed font-light">Built from the ground up for financial institutions requiring strict regulatory adherence and high throughput.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Demo -->
+  <section id="demo" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+    <div class="flex flex-col items-center text-center mb-16 reveal">
+      <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4" style="font-family:'JetBrains Mono',monospace;">Live Demo</span>
+      <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter mb-4">Try Verum Now</h2>
+      <p class="text-[#A1A1AA] text-base font-light max-w-xl leading-relaxed">
+        Generate a real zero-knowledge eligibility proof and authorize a Stellar trustline on-chain — without revealing your private data.
+      </p>
+    </div>
+
+    <!-- Step tabs -->
+    <div class="flex border border-[#27272A] rounded-lg overflow-hidden mb-8 reveal">
+      <button onclick="verum.goStep(1)" id="tab-1" class="flex-1 py-4 px-6 text-left border-r border-[#27272A] transition-colors duration-200" style="background:rgba(70,70,200,0.12);">
+        <span class="block text-xs font-medium tracking-widest uppercase mb-1" style="font-family:'JetBrains Mono',monospace;color:#4646C8;">01</span>
+        <span class="text-white text-sm font-normal">Setup</span>
+      </button>
+      <button onclick="verum.goStep(2)" id="tab-2" class="flex-1 py-4 px-6 text-left border-r border-[#27272A] transition-colors duration-200" style="background:transparent;">
+        <span class="block text-xs font-medium tracking-widest uppercase mb-1" style="font-family:'JetBrains Mono',monospace;color:#A1A1AA;">02</span>
+        <span class="text-sm font-normal" style="color:#A1A1AA;">Generate Proof</span>
+      </button>
+      <button onclick="verum.goStep(3)" id="tab-3" class="flex-1 py-4 px-6 text-left transition-colors duration-200" style="background:transparent;">
+        <span class="block text-xs font-medium tracking-widest uppercase mb-1" style="font-family:'JetBrains Mono',monospace;color:#A1A1AA;">03</span>
+        <span class="text-sm font-normal" style="color:#A1A1AA;">Authorize</span>
+      </button>
+    </div>
+
+    <!-- Panels -->
+    <div class="bg-[#282855]/20 border border-[#27272A] rounded-lg backdrop-blur-sm reveal">
+
+      <!-- Panel 1: Setup -->
+      <div id="panel-1" class="p-8">
+        <div class="mb-8">
+          <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family:'JetBrains Mono',monospace;">Issuer Configuration</p>
+          <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Active Eligibility Rules</h3>
+          <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">These rules are enforced cryptographically on-chain. No identity documents are collected or stored.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <div class="flex items-center gap-3 mb-3">
+              <iconify-icon icon="solar:shield-keyhole-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+              <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">Accreditation</span>
+            </div>
+            <p class="text-white text-sm font-normal">Accredited investors only</p>
+          </div>
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <div class="flex items-center gap-3 mb-3">
+              <iconify-icon icon="solar:planet-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+              <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">Jurisdiction</span>
+            </div>
+            <p class="text-white text-sm font-normal">US · GB · CA · DE</p>
+          </div>
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <div class="flex items-center gap-3 mb-3">
+              <iconify-icon icon="lucide:landmark" width="18" class="text-[#4646C8]"></iconify-icon>
+              <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">Min. Capital</span>
+            </div>
+            <p class="text-white text-sm font-normal">$50,000 committed</p>
+          </div>
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <div class="flex items-center gap-3 mb-3">
+              <iconify-icon icon="solar:lock-keyhole-linear" width="18" class="text-[#4646C8]"></iconify-icon>
+              <span class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">Merkle Root</span>
+            </div>
+            <p class="text-white text-xs font-light" style="font-family:'JetBrains Mono',monospace;word-break:break-all;">0x2356709c...e6488</p>
+          </div>
+        </div>
+        <div class="mb-6">
+          <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family:'JetBrains Mono',monospace;">Holder Secret Key</label>
+          <input id="holder-secret" type="password"
+            placeholder="SXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors"
+            style="font-family:'JetBrains Mono',monospace;" />
+          <p class="text-[#A1A1AA] text-xs mt-2 font-light">Enter a funded Stellar <strong class="text-white font-normal">testnet</strong> account secret key. Generate one free at <a href="https://lab.stellar.org" target="_blank" class="text-[#4646C8] hover:underline">lab.stellar.org</a>.</p>
+        </div>
+        <button onclick="verum.setupHolder()"
+          class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50">
+          <span id="setup-btn-text">Connect Holder Account</span>
+          <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+        </button>
+        <div id="setup-result" class="mt-6 hidden"></div>
+      </div>
+
+      <!-- Panel 2: Generate Proof -->
+      <div id="panel-2" class="p-8 hidden">
+        <div class="mb-8">
+          <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family:'JetBrains Mono',monospace;">Step 02</p>
+          <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Generate Eligibility Proof</h3>
+          <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">Your private data never leaves this machine. Only the cryptographic proof is submitted on-chain.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family:'JetBrains Mono',monospace;">Accreditation Status</label>
+            <div class="flex border border-[#27272A] rounded overflow-hidden">
+              <button id="acc-yes" onclick="verum.setAccredited(true)" class="flex-1 py-3 text-sm transition-colors text-white" style="background:rgba(70,70,200,0.15);">✓ Accredited</button>
+              <button id="acc-no" onclick="verum.setAccredited(false)" class="flex-1 py-3 text-sm transition-colors border-l border-[#27272A]" style="background:transparent;color:#A1A1AA;">✗ Not Accredited</button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family:'JetBrains Mono',monospace;">Jurisdiction</label>
+            <select id="country-code" class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none appearance-none" style="font-family:'JetBrains Mono',monospace;">
+              <option value="826">United Kingdom (GB) ✓</option>
+              <option value="840">United States (US) ✓</option>
+              <option value="124">Canada (CA) ✓</option>
+              <option value="276">Germany (DE) ✓</option>
+              <option value="999">North Korea (KP) ✗ — Not Permitted</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family:'JetBrains Mono',monospace;">Committed Capital (USD)</label>
+            <input id="capital" type="number" value="75000" class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors" style="font-family:'JetBrains Mono',monospace;" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-3" style="font-family:'JetBrains Mono',monospace;">Secret Nonce</label>
+            <input id="nonce" type="number" value="12345" class="w-full bg-[#111115] border border-[#27272A] text-white text-sm px-4 py-3 rounded focus:border-[#4646C8] outline-none transition-colors" style="font-family:'JetBrains Mono',monospace;" />
+          </div>
+        </div>
+        <button id="prove-btn" onclick="verum.generateProof()"
+          class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 mb-6">
+          Generate Zero-Knowledge Proof
+          <iconify-icon icon="solar:lock-keyhole-linear" width="16"></iconify-icon>
+        </button>
+        <div id="proof-terminal" class="hidden bg-[#030308]/70 border border-[#27272A] rounded-lg overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+            <div id="terminal-dot" class="w-2.5 h-2.5 rounded-full" style="background:#27272A;"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;" id="terminal-status">ZK Proof Engine</span>
+          </div>
+          <div id="terminal-body" class="p-5 min-h-32 max-h-56 overflow-y-auto text-xs leading-loose" style="font-family:'JetBrains Mono',monospace;"></div>
+        </div>
+        <div id="prove-result" class="mt-6 hidden"></div>
+      </div>
+
+      <!-- Panel 3: Authorize -->
+      <div id="panel-3" class="p-8 hidden">
+        <div class="mb-8">
+          <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family:'JetBrains Mono',monospace;">Step 03</p>
+          <h3 class="text-xl text-white font-normal tracking-tighter mb-3">Submit Proof &amp; Authorize</h3>
+          <p class="text-[#A1A1AA] text-sm font-light leading-relaxed">Your proof is verified on-chain by the Verum Gate contract. If valid, your trustline is authorized. The issuer sees nothing.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family:'JetBrains Mono',monospace;">Proof Size</p>
+            <p id="summary-size" class="text-[#4646C8] text-sm font-normal" style="font-family:'JetBrains Mono',monospace;">—</p>
+          </div>
+          <div class="border border-[#27272A] rounded-lg p-5 bg-[#111115]/50">
+            <p class="text-xs font-medium tracking-widest uppercase text-[#A1A1AA] mb-2" style="font-family:'JetBrains Mono',monospace;">Public Inputs</p>
+            <p id="summary-inputs" class="text-white text-sm font-normal" style="font-family:'JetBrains Mono',monospace;">—</p>
+          </div>
+        </div>
+        <div class="bg-[#030308]/70 border border-[#27272A] rounded p-4 mb-6 overflow-hidden" style="max-height:72px;position:relative;">
+          <p id="proof-hex-preview" class="text-xs text-[#A1A1AA] break-all" style="font-family:'JetBrains Mono',monospace;">—</p>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:36px;background:linear-gradient(transparent,#030308);"></div>
+        </div>
+        <button id="authorize-btn" onclick="verum.authorize()"
+          class="inline-flex items-center gap-2 bg-[#4646C8] hover:bg-[#3B3BB4] text-white px-6 py-3 rounded text-sm font-normal transition-all duration-300 border border-[#3B3BB4]/50 mb-6">
+          Submit to Verum Gate
+          <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+        </button>
+        <div id="auth-terminal" class="hidden bg-[#030308]/70 border border-[#27272A] rounded-lg overflow-hidden mb-6">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+            <div id="auth-dot" class="w-2.5 h-2.5 rounded-full" style="background:#27272A;"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;" id="auth-status">Stellar Testnet</span>
+          </div>
+          <div id="auth-terminal-body" class="p-5 min-h-24 max-h-48 overflow-y-auto text-xs leading-loose" style="font-family:'JetBrains Mono',monospace;"></div>
+        </div>
+        <div id="auth-result" class="hidden"></div>
+        <button onclick="verum.goStep(2)" class="mt-4 text-xs text-[#A1A1AA] hover:text-white transition-colors border border-[#27272A] hover:border-[#4646C8] px-4 py-2 rounded" style="font-family:'JetBrains Mono',monospace;">← Generate New Proof</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="setup" class="relative z-10 w-full max-w-5xl mx-auto px-6 mb-32 md:mb-48">
+    <div class="flex flex-col md:flex-row gap-16 items-center">
+      <div class="w-full md:w-1/2 reveal">
+        <span class="text-[#A1A1AA] text-xs font-medium tracking-widest uppercase mb-4 block" style="font-family:'JetBrains Mono',monospace;">Developers</span>
+        <h2 class="text-3xl md:text-4xl text-white font-light tracking-tighter mb-6">How it works</h2>
+        <p class="text-[#A1A1AA] text-base leading-relaxed mb-8 font-light">
+          A holder commits their eligibility facts once as a single hash. To request
+          authorization, they generate a Noir circuit proof. A Soroban contract
+          verifies the proof on-chain and authorizes the trustline automatically.
+        </p>
+        <ul class="space-y-5">
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+            <span class="text-sm text-gray-300 font-light leading-relaxed">Holder commits eligibility facts as a Pedersen hash — no documents sent</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+            <span class="text-sm text-gray-300 font-light leading-relaxed">Noir circuit proves accreditation, jurisdiction, and capital in one proof</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-linear" width="22" stroke-width="1.5" class="text-[#4646C8] shrink-0 mt-0.5"></iconify-icon>
+            <span class="text-sm text-gray-300 font-light leading-relaxed">Verum Gate verifies on-chain via BN254 and calls SetTrustLineFlags</span>
+          </li>
+        </ul>
+      </div>
+      <div class="w-full md:w-1/2 reveal">
+        <div class="bg-[#030308]/50 border border-[#27272A] rounded-lg overflow-hidden shadow-2xl backdrop-blur-sm">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-[#27272A] bg-[#111115]/80">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27272A]"></div>
+            <span class="ml-2 text-xs text-[#A1A1AA]" style="font-family:'JetBrains Mono',monospace;">verum_circuit/src/main.nr</span>
+          </div>
+          <div class="p-6 overflow-x-auto">
+            <pre class="text-xs leading-loose" style="font-family:'JetBrains Mono',monospace;"><code><span style="color:#A1A1AA;opacity:0.5;">// Single proof, four eligibility checks</span>
+<span style="color:#3B3BB4;">fn</span> <span style="color:#ffffff;">main</span>(
+  accredited_flag: Field,   <span style="color:#A1A1AA;opacity:0.5;">// private</span>
+  country_code: Field,      <span style="color:#A1A1AA;opacity:0.5;">// private</span>
+  committed_capital: <span style="color:#4646C8;">u64</span>,  <span style="color:#A1A1AA;opacity:0.5;">// private</span>
+  secret_nonce: Field,      <span style="color:#A1A1AA;opacity:0.5;">// private</span>
+  commitment: <span style="color:#3B3BB4;">pub</span> Field,    <span style="color:#A1A1AA;opacity:0.5;">// public</span>
+  merkle_root: <span style="color:#3B3BB4;">pub</span> Field,   <span style="color:#A1A1AA;opacity:0.5;">// public</span>
+  min_capital_threshold: <span style="color:#3B3BB4;">pub</span> <span style="color:#4646C8;">u64</span>
+) {
+  <span style="color:#A1A1AA;opacity:0.5;">// 1. Commitment binding</span>
+  <span style="color:#3B3BB4;">assert</span>(pedersen_hash([...]) == commitment);
+  <span style="color:#A1A1AA;opacity:0.5;">// 2. Accreditation equality</span>
+  <span style="color:#3B3BB4;">assert</span>(accredited_flag == <span style="color:#4646C8;">1</span>);
+  <span style="color:#A1A1AA;opacity:0.5;">// 3. Jurisdiction Merkle membership</span>
+  <span style="color:#3B3BB4;">assert</span>(computed_root == merkle_root);
+  <span style="color:#A1A1AA;opacity:0.5;">// 4. Capital range proof</span>
+  <span style="color:#3B3BB4;">assert</span>(committed_capital >= min_capital_threshold);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 w-full border-t border-[#27272A] bg-[#030308]/80 backdrop-blur-md pt-12 pb-8 mt-auto">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-2">
+        <span class="text-white font-medium tracking-tighter text-sm uppercase flex items-center gap-1.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M7.5 8.5h9l-4.5 8z"></path>
+          </svg>
+          VERUM
+        </span>
+        <span class="hidden md:inline text-[#27272A]">|</span>
+        <span class="text-[#A1A1AA] text-xs font-light">Built for Stellar Hacks: Real-World ZK</span>
+      </div>
+      <div class="flex gap-6 text-xs text-[#A1A1AA] font-light">
+        <a href="https://github.com/phllp-tanstic/verum" target="_blank" rel="noopener" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://developers.stellar.org/docs/build/apps/zk" target="_blank" rel="noopener" class="hover:text-white transition-colors">Stellar ZK Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Canvas animation — inline, non-module, runs immediately -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('pixelGrid');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      let width, height;
+      const pixelSize = 8;
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      let time = 0;
+      function render() {
+        ctx.fillStyle = '#030308';
+        ctx.fillRect(0, 0, width, height);
+        const cols = Math.ceil(width / pixelSize);
+        const rows = Math.ceil(height / pixelSize);
+        const arcCenterY = height * 0.55;
+        const arcDrop    = height * 0.9;
+        const thickness  = height * 0.28;
+        for (let x = 0; x < cols; x++) {
+          for (let y = 0; y < rows; y++) {
+            const px = x * pixelSize;
+            const py = y * pixelSize;
+            const nx = (px / width) * 2 - 1;
+            const curveY = arcCenterY + Math.pow(Math.abs(nx), 1.8) * arcDrop;
+            const distToCurve = Math.abs(py - curveY);
+            let intensity = Math.max(0, 1 - (distToCurve / thickness));
+            if (intensity > 0.01) {
+              intensity = Math.max(0, Math.min(1,
+                intensity + Math.sin(nx * 4 - time * 1.5) * 0.1 + Math.cos(py * 0.01 + time) * 0.1
+              ));
+              intensity *= Math.max(0, 1 - Math.pow(Math.abs(nx), 2.5));
+              if (intensity > 0.02) {
+                const coreStr = Math.pow(intensity, 3);
+                const midStr  = Math.pow(intensity, 1.5);
+                ctx.fillStyle = `rgb(${Math.floor(40*intensity+150*coreStr)},${Math.floor(40*intensity+150*coreStr)},${Math.floor(220*midStr+35*coreStr)})`;
+                ctx.globalAlpha = Math.min(intensity, 0.45);
+                ctx.fillRect(px, py, pixelSize - 1, pixelSize - 1);
+              }
+            }
+          }
+        }
+        ctx.globalAlpha = 1.0;
+        time += 0.02;
+        requestAnimationFrame(render);
+      }
+      render();
+    })();
+  </script>
+
+  <!-- Scroll reveal — inline, runs immediately -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity 1s ease, transform 1s ease';
+        observer.observe(el);
+      });
+    });
+  </script>
+
+  <!-- Demo logic module -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

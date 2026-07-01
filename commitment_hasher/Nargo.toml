@@ -1,0 +1,6 @@
+[package]
+name = "commitment_hasher"
+type = "bin"
+authors = [""]
+
+[dependencies]

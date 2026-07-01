@@ -1,11 +1,11 @@
 accredited_flag = "1"
-country_code = "826"
+country_code = "840"
 committed_capital = "75000"
-secret_nonce = "12345"
-sibling0 = "0x1093aa21e541e164067d7c3f7b6ef75e87d6ef7f5d6fe2909d354cbd8f0ac39f"
-direction0 = true
+secret_nonce = "55555"
+sibling0 = "0x0703245b8184cd1194afde95c21541fd762728dcfdf2db2268a3d58ae59aaeab"
+direction0 = false
 sibling1 = "0x27888d464fe3d84ea0a593fd9a4b1a34bc21e9bec80812e8c49a9fe83c13dc9e"
 direction1 = false
-commitment = "0x2dccc9d2b8687c2e30aa0596f209220a05a9365d6e2aca8d1536cec6b3c2132a"
+commitment = "0x166492c4172d3c2e3aa73dd816319fc0fdd4210188cd6a5100c0f7e6f6a3413f"
 merkle_root = "0x2356709cffdbacffa82a3302fcaf66cc44203e95e731be01abc59e24a8ae6488"
 min_capital_threshold = "50000"

@@ -1,0 +1,10 @@
+frontend/node_modules
+frontend/.env
+frontend/dist
+verum_circuit/target/*.gz
+commitment_hasher/target
+rs-soroban-ultrahonk
+ultrahonk_soroban_contract
+verum_gate
+.git
+frontend/.env
